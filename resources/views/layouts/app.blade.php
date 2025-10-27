@@ -14,15 +14,12 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Your custom CSS variables -->
     <style>
         :root {
             --background: oklch(0.99 0 0);
             --foreground: oklch(0.15 0 0);
             --card: oklch(1 0 0);
             --card-foreground: oklch(0.15 0 0);
-            --popover: oklch(1 0 0);
-            --popover-foreground: oklch(0.15 0 0);
             --primary: oklch(0.35 0.08 160);
             --primary-foreground: oklch(0.99 0 0);
             --secondary: oklch(0.95 0.01 160);
@@ -31,11 +28,7 @@
             --muted-foreground: oklch(0.5 0.02 160);
             --accent: oklch(0.25 0.06 200);
             --accent-foreground: oklch(0.99 0 0);
-            --destructive: oklch(0.577 0.245 27.325);
-            --destructive-foreground: oklch(0.99 0 0);
             --border: oklch(0.9 0.01 160);
-            --input: oklch(0.9 0.01 160);
-            --ring: oklch(0.35 0.08 160);
             --radius: 0.5rem;
         }
 
@@ -44,8 +37,6 @@
             --foreground: oklch(0.99 0 0);
             --card: oklch(0.18 0 0);
             --card-foreground: oklch(0.99 0 0);
-            --popover: oklch(0.18 0 0);
-            --popover-foreground: oklch(0.99 0 0);
             --primary: oklch(0.5 0.1 160);
             --primary-foreground: oklch(0.99 0 0);
             --secondary: oklch(0.25 0.02 160);
@@ -54,14 +45,9 @@
             --muted-foreground: oklch(0.65 0.03 160);
             --accent: oklch(0.4 0.08 200);
             --accent-foreground: oklch(0.99 0 0);
-            --destructive: oklch(0.396 0.141 25.723);
-            --destructive-foreground: oklch(0.99 0 0);
             --border: oklch(0.25 0.02 160);
-            --input: oklch(0.25 0.02 160);
-            --ring: oklch(0.5 0.1 160);
         }
 
-        /* Apply CSS variables to Tailwind classes */
         .bg-background { background-color: var(--background); }
         .text-foreground { color: var(--foreground); }
         .bg-card { background-color: var(--card); }
@@ -80,25 +66,39 @@
             background-color: var(--background);
             color: var(--foreground);
             font-family: 'Geist', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Custom animations for tw-animate-css equivalents */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Prevent body scroll when menu is open */
+        body.menu-open {
+            overflow: hidden;
         }
-        @keyframes slideInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+
+        /* Mobile menu animations */
+        .mobile-menu-enter {
+            transform: translateX(100%);
         }
-        .animate-fadeIn { animation: fadeIn 0.5s ease-out; }
-        .animate-slideInUp { animation: slideInUp 0.5s ease-out; }
+        
+        .mobile-menu-enter-active {
+            transform: translateX(0);
+            transition: transform 300ms ease-out;
+        }
+        
+        .mobile-menu-exit {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-exit-active {
+            transform: translateX(100%);
+            transition: transform 300ms ease-in;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
-    <div class="min-h-screen">
+    <div class="min-h-screen flex flex-col">
         @include('components.header')
-        <main>
+        <main class="flex-1">
             @yield('content')
         </main>
         @include('components.footer')
