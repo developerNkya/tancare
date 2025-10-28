@@ -34,7 +34,8 @@ RUN chown -R www-data:www-data /var/www
 RUN chmod -R 755 /var/www/storage
 RUN chmod -R 755 /var/www/bootstrap/cache
 
-# Create nginx configuration
+# Remove existing default site and create nginx configuration
+RUN rm -f /etc/nginx/sites-enabled/default
 RUN echo 'server { \
     listen 80; \
     server_name _; \
@@ -57,8 +58,8 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/sites-available/default
 
-# Enable the site
-RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+# Enable the site (only if link doesn't exist)
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Create supervisor configuration
 RUN echo '[supervisord] \
@@ -79,8 +80,8 @@ autorestart=true \
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Generate application key
-RUN php artisan key:generate
+# Generate application key (only if .env doesn't exist)
+RUN if [ ! -f .env ]; then cp .env.example .env && php artisan key:generate; fi
 
 # Run optimizations
 RUN php artisan config:cache
