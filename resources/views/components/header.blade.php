@@ -23,10 +23,10 @@
                 $navigation = [
                     ['name' => 'Home', 'href' => '/'],
                     ['name' => 'About Us', 'href' => '/#about'],
-                    ['name' => 'Certification', 'href' => '#certification'],
-                    ['name' => 'For Facilities', 'href' => '#facilities'],
-                    ['name' => 'For Assessors', 'href' => '#assessors'],
-                    ['name' => 'For Advisors', 'href' => '#advisors'],
+                    ['name' => 'Certification', 'href' => '/#certification'],
+                    ['name' => 'For Facilities', 'href' => '/#facilities'],
+                    ['name' => 'For Assessors', 'href' => '/#assessors'],
+                    ['name' => 'For Advisors', 'href' => '/#advisors'],
                     ['name' => 'FAQ', 'href' => '/faq'],
                     ['name' => 'Contact', 'href' => '/contact'],
                 ];

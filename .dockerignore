@@ -1,0 +1,14 @@
+.git
+.gitignore
+Dockerfile
+docker/
+node_modules/
+tests/
+.editorconfig
+.env
+.styleci.yml
+.phpunit.result.cache
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
