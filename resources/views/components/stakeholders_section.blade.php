@@ -1,12 +1,13 @@
-<section class="py-24 sm:py-32 bg-background">
+<section class="py-24 sm:py-32 bg-background overflow-hidden">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
+        <div class="mx-auto max-w-2xl text-center opacity-0 animate-on-scroll">
             <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Join the TanCare Network</h2>
             <p class="mt-6 text-lg leading-8 text-muted-foreground">
                 Whether you're a healthcare facility, assessor, or quality advisor, TanCare provides the tools and support
                 you need to excel.
             </p>
         </div>
+
         <div class="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-3">
             @php
                 $stakeholders = [
@@ -52,8 +53,8 @@
                 ];
             @endphp
 
-            @foreach($stakeholders as $stakeholder)
-                <div id="{{ $stakeholder['id'] }}" class="rounded-lg border border-border bg-card p-6 shadow-sm flex flex-col h-full">
+            @foreach($stakeholders as $index => $stakeholder)
+                <div id="{{ $stakeholder['id'] }}" class="rounded-lg border border-border bg-card p-6 shadow-sm flex flex-col h-full transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg opacity-0 transform translate-y-8 animate-on-scroll" style="animation-delay: {{ $index * 0.2 }}s;">
                     <div class="flex flex-col">
                         <div class="flex h-14 w-14 items-center justify-center rounded-lg bg-accent text-accent-foreground">
                             @if($stakeholder['icon'] === 'hospital')
@@ -98,3 +99,35 @@
         </div>
     </div>
 </section>
+
+<style>
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 1s ease-out forwards;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+});
+</script>
