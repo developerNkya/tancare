@@ -26,65 +26,67 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 # Install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy application files with proper permissions
-COPY --chown=www-data:www-data . .
+# Copy application files
+COPY . .
 
-# Create nginx configuration on-the-fly (since docker/nginx.conf doesn't exist)
-RUN echo 'server {\n\
-    listen 80;\n\
-    root /var/www/public;\n\
-    index index.php index.html;\n\
-\n\
-    location / {\n\
-        try_files \$uri \$uri/ /index.php?\$query_string;\n\
-    }\n\
-\n\
-    location ~ \.php$ {\n\
-        include fastcgi_params;\n\
-        fastcgi_pass 127.0.0.1:9000;\n\
-        fastcgi_index index.php;\n\
-        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;\n\
-    }\n\
-\n\
-    location ~ /\.ht {\n\
-        deny all;\n\
-    }\n\
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www
+RUN chmod -R 755 /var/www/storage
+RUN chmod -R 755 /var/www/bootstrap/cache
+
+# Create nginx configuration
+RUN echo 'server { \
+    listen 80; \
+    server_name _; \
+    root /var/www/public; \
+    index index.php index.html index.htm; \
+    \
+    location / { \
+        try_files \$uri \$uri/ /index.php?\$query_string; \
+    } \
+    \
+    location ~ \.php$ { \
+        include fastcgi_params; \
+        fastcgi_pass 127.0.0.1:9000; \
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name; \
+        fastcgi_param PATH_INFO \$fastcgi_path_info; \
+    } \
+    \
+    location ~ /\.ht { \
+        deny all; \
+    } \
 }' > /etc/nginx/sites-available/default
 
-# Create supervisor configuration on-the-fly
-RUN echo '[supervisord]\n\
-nodaemon=true\n\
-user=root\n\
-\n\
-[program:php-fpm]\n\
-command=php-fpm\n\
-autostart=true\n\
-autorestart=true\n\
-\n\
-[program:nginx]\n\
-command=nginx -g "daemon off;"\n\
-autostart=true\n\
-autorestart=true\n\
+# Enable the site
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Create supervisor configuration
+RUN echo '[supervisord] \
+nodaemon=true \
+user=root \
+\
+[program:php-fpm] \
+command=php-fpm -D \
+autostart=true \
+autorestart=true \
+\
+[program:nginx] \
+command=nginx -g "daemon off;" \
+autostart=true \
+autorestart=true \
 ' > /etc/supervisor/conf.d/supervisor.conf
 
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Generate key (only if .env doesn't exist or is empty)
-RUN if [ ! -f .env ]; then cp .env.example .env && php artisan key:generate; fi
+# Generate application key
+RUN php artisan key:generate
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/storage
-RUN chown -R www-data:www-data /var/www/bootstrap/cache
-RUN chmod -R 775 /var/www/storage
-RUN chmod -R 775 /var/www/bootstrap/cache
+# Run optimizations
+RUN php artisan config:cache
+RUN php artisan route:cache
 
-# Run migrations and optimizations (optional)
-# RUN php artisan optimize:clear
-# RUN php artisan optimize
-
-# Expose port 80 (nginx standard port)
 EXPOSE 80
 
-# Start supervisor which will start both nginx and php-fpm
+# Start supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
