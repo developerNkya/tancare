@@ -21,7 +21,8 @@
         <div class="hidden lg:flex lg:gap-x-8">
             @php
                 $navigation = [
-                    ['name' => 'About Us', 'href' => '#about'],
+                    ['name' => 'Home', 'href' => '/'],
+                    ['name' => 'About Us', 'href' => '/#about'],
                     ['name' => 'Certification', 'href' => '#certification'],
                     ['name' => 'For Facilities', 'href' => '#facilities'],
                     ['name' => 'For Assessors', 'href' => '#assessors'],
