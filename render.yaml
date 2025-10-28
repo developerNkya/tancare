@@ -2,13 +2,15 @@ services:
   - type: web
     name: laravel-app
     env: docker
+    region: ohio  # Required: specify a region
+    plan: free    # Required: specify a plan
     docker:
       dockerfile: Dockerfile
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
-        value: false
+        value: "false"  # Should be string
       - key: APP_KEY
         generateValue: true
       - key: APP_URL
@@ -21,6 +23,8 @@ services:
 
 databases:
   - name: laravel-db
+    type: postgres  # Required: specify database type
+    plan: free
+    region: ohio    # Should match service region
     databaseName: laravel
     user: laravel
-    plan: free
