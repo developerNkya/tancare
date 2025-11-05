@@ -64,6 +64,7 @@ RUN if [ ! -f .env ]; then cp .env.example .env && php artisan key:generate; fi
 
 RUN php artisan config:cache
 RUN php artisan route:cache
+RUN php artisan migrate --force
 
 EXPOSE 8000
 
