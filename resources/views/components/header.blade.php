@@ -29,6 +29,7 @@
                     ['name' => 'For Advisors', 'href' => '/#advisors'],
                     ['name' => 'FAQ', 'href' => '/faq'],
                     ['name' => 'Contact', 'href' => '/contact'],
+                     ['name' => 'App Policy', 'href' => '/contact'],
                 ];
             @endphp
             
@@ -42,7 +43,7 @@
             @endforeach
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#app" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors inline-block">
+            <a href="/#app" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors inline-block">
                 Get the App
             </a>
         </div>
