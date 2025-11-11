@@ -15,4 +15,8 @@ Route::get('/contact', function () {
     return view('contact.contact');
 });
 
+Route::get('/app-policy', function () {
+    return view('appPolicy.app_policy');
+});
+
 Route::post('/contact/submit', [ContactController::class, 'submit'])->name('contact.submit');

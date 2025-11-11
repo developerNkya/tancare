@@ -29,7 +29,7 @@
                     ['name' => 'For Advisors', 'href' => '/#advisors'],
                     ['name' => 'FAQ', 'href' => '/faq'],
                     ['name' => 'Contact', 'href' => '/contact'],
-                     ['name' => 'App Policy', 'href' => '/contact'],
+                     ['name' => 'App Policy', 'href' => '/app-policy'],
                 ];
             @endphp
             

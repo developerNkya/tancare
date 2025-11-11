@@ -90,7 +90,7 @@
                             </div>
                             <div>
                                 <p class="font-medium">Email</p>
-                                <p class="mt-1 text-sm text-muted-foreground">info@tancare.go.tz</p>
+                                <p class="mt-1 text-sm text-muted-foreground">info@tancare.tz</p>
                             </div>
                         </div>
 
