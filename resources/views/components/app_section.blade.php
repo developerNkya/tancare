@@ -40,22 +40,19 @@
 
                     <div class="flex items-center justify-center opacity-0 animate-on-scroll">
                         <div class="relative hover:-translate-y-2 transition-transform duration-300">
-                            <div class="flex h-64 w-64 items-center justify-center rounded-2xl border-2 border-border bg-card p-8">
-                                <div class="grid h-full w-full grid-cols-8 grid-rows-8 gap-1">
-                                    @php
-                                        $qrCells = [];
-                                        for ($i = 0; $i < 64; $i++) {
-                                            $qrCells[] = rand(0, 1) > 0.5;
-                                        }
-                                    @endphp
-                                    @foreach($qrCells as $isDark)
-                                        <div class="rounded-sm {{ $isDark ? 'bg-foreground' : 'bg-background' }}"></div>
-                                    @endforeach
-                                </div>
+                            <div class="flex h-64 w-64 items-center justify-center rounded-2xl border-2 border-border bg-card p-4">
+                                <img 
+                                    src="{{ asset('images/tancare.jpeg') }}" 
+                                    alt="TanCare App QR Code"
+                                    class="h-full w-full object-contain rounded-xl"
+                                >
                             </div>
-                            <p class="mt-4 text-center text-sm text-muted-foreground">Scan to download the TanCare app</p>
+                            <p class="mt-4 text-center text-sm text-muted-foreground">
+                                Scan to download the TanCare app
+                            </p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

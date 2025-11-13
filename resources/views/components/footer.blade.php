@@ -42,6 +42,7 @@
                                     ['name' => 'Certification', 'href' => '#certification'],
                                     ['name' => 'FAQ', 'href' => '/faq'],
                                     ['name' => 'Contact', 'href' => '/contact'],
+                                    ['name' => 'App Policy', 'href' => '/app-policy'],
                                 ];
                             @endphp
                             @foreach($mainNav as $item)
