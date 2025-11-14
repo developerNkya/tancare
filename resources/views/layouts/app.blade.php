@@ -13,7 +13,8 @@
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="icon" type="image/png" href="/images/tancare_logo.png">
+
     <style>
         :root {
             --background: oklch(0.99 0 0);

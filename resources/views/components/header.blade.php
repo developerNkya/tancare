@@ -2,10 +2,15 @@
 <header class="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
     <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
-            <a href="/" class="-m-1.5 p-1.5">
-                <span class="text-2xl font-bold text-primary">TanCare</span>
+            <a href="/" class="-m-1.5 p-1.5 flex items-center">
+                <img 
+                    src="/images/tancare_logo.png" 
+                    class="h-[100px] w-auto" 
+                    alt="TanCare Logo"
+                >
             </a>
         </div>
+
         <div class="flex lg:hidden">
             <button
                 type="button"
@@ -18,6 +23,7 @@
                 </svg>
             </button>
         </div>
+
         <div class="hidden lg:flex lg:gap-x-8">
             @php
                 $navigation = [
@@ -29,7 +35,7 @@
                     ['name' => 'For Advisors', 'href' => '/#advisors'],
                     ['name' => 'FAQ', 'href' => '/faq'],
                     ['name' => 'Contact', 'href' => '/contact'],
-                     ['name' => 'App Policy', 'href' => '/app-policy'],
+                    ['name' => 'App Policy', 'href' => '/app-policy'],
                 ];
             @endphp
             
@@ -42,6 +48,7 @@
                 </a>
             @endforeach
         </div>
+
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="/#app" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors inline-block">
                 Get the App
@@ -59,8 +66,12 @@
     <div class="fixed inset-y-0 right-0 w-full max-w-sm bg-background shadow-xl">
         <div class="flex h-full flex-col overflow-y-auto">
             <div class="flex items-center justify-between p-6 border-b border-border">
-                <a href="/" class="-m-1.5 p-1.5" onclick="closeMobileMenu()">
-                    <span class="text-2xl font-bold text-primary">TanCare</span>
+                <a href="/" class="-m-1.5 p-1.5 flex items-center" onclick="closeMobileMenu()">
+                    <img 
+                        src="/images/tancare_logo.png" 
+                        class="h-[60px] w-auto" 
+                        alt="TanCare Logo"
+                    >
                 </a>
                 <button
                     type="button"
@@ -102,34 +113,23 @@ function openMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     menu.classList.remove('hidden');
     document.body.classList.add('menu-open');
-    
-    // Add animation class after a small delay
-    setTimeout(() => {
-        menu.classList.add('mobile-menu-enter-active');
-    }, 10);
+    setTimeout(() => menu.classList.add('mobile-menu-enter-active'), 10);
 }
 
 function closeMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     menu.classList.remove('mobile-menu-enter-active');
-    
     setTimeout(() => {
         menu.classList.add('hidden');
         document.body.classList.remove('menu-open');
     }, 300);
 }
 
-// Close mobile menu with Escape key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeMobileMenu();
-    }
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMobileMenu();
 });
 
-// Close mobile menu when clicking on overlay
-document.getElementById('mobile-menu')?.addEventListener('click', function(e) {
-    if (e.target.classList.contains('bg-black/50')) {
-        closeMobileMenu();
-    }
+document.getElementById('mobile-menu')?.addEventListener('click', e => {
+    if (e.target.classList.contains('bg-black/50')) closeMobileMenu();
 });
 </script>
